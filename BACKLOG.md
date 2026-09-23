@@ -10,6 +10,8 @@ Tracked in priority order. Check items off as they're built.
 
 - [~] **`PORTABILITY.md`** — first draft written (general knowledge, not hands-on testing per platform; each platform section is explicitly confidence-labeled). Still needs verification/expansion from someone who's actually run this on Codex, Cursor, Windsurf, Copilot, Cline, Aider, or Antigravity — good first contribution, see CONTRIBUTORS.md's recognition loop.
 
+- [x] **Deepen ASI03 (Permissions/rules) with a real redundant-enforcement example** — from K0's actual implementation (entries-paused checked independently at 3 separate call sites, plus a fail-closed default when the marker file itself is unreadable): (10) a rule enforced at one central gate has a specific failure mode (a new code path that forgets to route through it fully bypasses the rule) that redundant enforcement at every relevant entry point avoids; separately, when a state-check mechanism itself fails, whether it defaults fail-closed or fail-open is a deliberate design choice worth verifying, not an assumed safe default.
+
 ## External feedback (2026-09-24)
 
 Solid critique from an outside reviewer — not shallow, worth acting on rather than just filing away. Three items:
