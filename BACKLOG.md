@@ -12,6 +12,8 @@ Tracked in priority order. Check items off as they're built.
 
 ## Real-world stress test (continued)
 
+- [x] **Tools/affordances finally gets real-world insight** — from real ops scripts: (7) sensitive-input channel (stdin vs CLI arg vs file) is itself a security-relevant design choice, since args/files leak in ways stdin doesn't; (8) a function that looks like a pure read can have hidden side effects (syncing state, marking things changed on empty results) making it unsafe to reuse for testing/probing — verify before assuming "just reading" is safe, and build a genuinely separate probe path if not; plus a smaller note on tools that silently accept empty input when their interactive-terminal assumption is violated in a different invocation context.
+
 - [x] **Third-party/vendored skills as a supply-chain dependency** — from a real installed third-party diagram-generation skill with its own careful update-consent language ("the notice is information, not permission... silence is never consent"): distinguish self-authored from vendored skills in the portfolio (same inherited-capability risk as a forked codebase), and check whether any self-update mechanism requires explicit consent or could auto-apply — notified is not the same claim as consented. Added to Skill Portfolio checklist.
 
 - [x] **Recurring review reason signals a classifier fix, not more triage** — from a real human-review skill for flagged items: if the same underlying reason keeps putting items in front of a human reviewer, that's a signal the upstream classifier/rule needs fixing, not evidence the review process is working — continuing to manually triage each instance is Shifting the Burden wearing a human-review costume. Added to Human Interface's volume/batching point.
