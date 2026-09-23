@@ -10,6 +10,8 @@ Tracked in priority order. Check items off as they're built.
 
 ## Real-world stress test (continued)
 
+- [x] **HARKing, outlier robustness, and sample clustering** — from a real overfitting-prevention skill: (8) retrospective rule-tuning bias — was a new threshold set before or after seeing the specific data point that triggered the change (before = evidence, after = reverse-engineered story); (9) sample clustering can inflate apparent confidence (148 "samples" from 39 underlying sources isn't 148 independent observations), plus a note on requiring replication before acting on one passing result when testing many hypotheses at once. Added to Data/ground-truth checklist.
+
 - [x] **Step 7: offer to contribute back a genuinely new pattern.** When an audit of a user's real system surfaces a structurally new checklist-worthy pattern (not just an instance of an existing item), the skill now offers — briefly, skippably, only when genuinely new — to help the user file it as a contribution to this project (issue/PR), shaped per `CONTRIBUTING.md`'s format. Closes the loop this session ran manually (Meridian → insight → back into the skill) into something the skill does on its own going forward.
 
 - [x] **Time-boxed elevation fail-open/fail-closed, and gate-vs-process bypass** — extended Permissions/rules with two points from a real time-boxed unlock mechanism (`/unlock <minutes>` with auto re-lock): (8) does a temporary permission elevation auto-expire (fail-closed) or require an explicit revert (fail-open, one forgotten step from permanent); (9) a gate can be code-enforced and still deliver less protection than it appears to if bypassing its friction also silently skips a deeper process (a review checklist, a changelog entry) the gate was standing in for.
