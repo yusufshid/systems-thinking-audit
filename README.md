@@ -1,4 +1,27 @@
-# systems-thinking-audit
+<p align="center">
+  <img src="assets/logo.svg" width="120" alt="systems-thinking-audit logo" />
+</p>
+
+<h1 align="center">systems-thinking-audit</h1>
+
+<p align="center">
+  <strong>Audit AI agents with systems thinking — leverage points, feedback loops, emergent behavior, and paradigm/mental model.</strong>
+</p>
+
+<p align="center">
+  <a href="skill/systems-thinking-audit/SKILL.md">Skill</a> ·
+  <a href="skill/systems-thinking-audit/references/framework.md">Framework</a> ·
+  <a href="skill/systems-thinking-audit/references/domains.md">Domains</a> ·
+  <a href="CONTRIBUTING.md">Contributing</a> ·
+  <a href="DESIGN_PRINCIPLES.md">Design Principles</a> ·
+  <a href="BACKLOG.md">Backlog</a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/github/license/yusufshid/systems-thinking-audit" alt="license" />
+  <img src="https://img.shields.io/github/last-commit/yusufshid/systems-thinking-audit" alt="last commit" />
+  <img src="https://img.shields.io/badge/PRs-welcome-brightgreen" alt="PRs welcome" />
+</p>
 
 A Claude Code Skill that audits AI agents (single-agent or multi-agent) using a systems-thinking framework — leverage points, feedback loops, emergent behavior, and paradigm/mental model — to find structural risks that ordinary code review or security review miss. Built and tested in public.
 
