@@ -26,6 +26,10 @@ Solid critique from an outside reviewer, acted on rather than filed away:
 - [x] **System Archetypes gains a 6th pattern: Tragedy of the Commons** — multiple independent monitoring/cron processes drawing on the same rate-limited API quota, none individually greedy, nobody tracking aggregate consumption.
 - [x] **Shifting the Burden gains a second example**: a recurring credential-pasted-into-chat incident "fixed" each time by manual rotation rather than a structural prevention.
 
+## Done — MITRE ATLAS cross-reference
+
+- [x] **Cross-referenced [MITRE ATLAS](https://atlas.mitre.org/) (v2026.09, 16 tactics / 208 techniques) against `framework.md`.** Verified directly from MITRE's official `atlas-data` repo, not from memory. ATLAS is technique-level (adversary TTPs), one step more granular than OWASP's risk-category taxonomy, and mostly maps onto sections already covered here — but cross-referencing surfaced 3 genuinely new structural angles, each tagged inline with its AML technique ID: Memory/state point 10 (trust segregation within context — the root cause behind prompt injection, RAG poisoning, and context poisoning all being the same missing distinction between "instruction" and "data"), Tools/affordances point 10 (a tool's definition/schema is a mutable trust surface that can change after initial review, not a one-time-verified fact — "tool poisoning"/rug-pull), Cost/economics point 6 (cost exhaustion as a deliberate external attack, not just an internal-bug risk). README's "what it's for" section updated to name both taxonomies.
+
 ## Done — real-world stress test against lp-meridian-mod-cupz
 
 Audited a real, mature production system (a live Solana LP trading bot with its own independently-built Meadows-style feedback-loop audit practice) as a series of targeted passes, purely to find gaps in this skill's own checklist by comparison. Each entry names the mechanism found and what it closed:
