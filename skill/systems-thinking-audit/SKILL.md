@@ -58,7 +58,10 @@ ALWAYS use this exact structure:
 [One finding per relevant leverage-point level found. For each: what level (parameter / feedback loop / information structure / rules / goal / paradigm), what's actually happening, risk level, recommendation.]
 
 ### Feedback Loops
-[For each loop identified: balancing or reinforcing, what signal it uses (self-check / independent verifier / ground truth / human), delay, risk level, recommendation. Explicitly call out if there's NO balancing loop somewhere one is needed.]
+**Reinforcing loops found:** [Bulleted one-liners — name each loop and the mechanism that compounds. Write "None identified" if genuinely none, don't force one in.]
+**Balancing loops found:** [Bulleted one-liners — name each loop and what it corrects. Write "None identified" if the agent has no self-correcting mechanism at all — this is itself usually a Critical finding, not just an empty list.]
+
+[Then, for each loop identified above, expand: balancing or reinforcing, what signal it uses (self-check / independent verifier / ground truth / human), delay, risk level, recommendation. Explicitly call out if there's NO balancing loop somewhere one is needed.]
 
 ### Emergent Behavior Risks
 [Plausible behaviors that could arise from interaction, not from any single component. Risk level, recommendation — usually a structural change (add a check, reduce combinatorial surface, separate a shared bias) rather than a prompt tweak.]
