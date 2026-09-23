@@ -5,7 +5,7 @@ This repo is a single Claude Code Skill (`skill/systems-thinking-audit/`) plus i
 **Read [`DESIGN_PRINCIPLES.md`](DESIGN_PRINCIPLES.md) first.** It's the reference point every PR gets checked against — not a bureaucratic hurdle, but the fastest way to get a PR merged without back-and-forth, since a change that clearly serves one of those principles is easy to say yes to. The PR template asks you to name which principle(s) your change serves.
 
 ## What's here
-- [`SKILL.md`](skill/systems-thinking-audit/SKILL.md) — the workflow the skill follows (Steps 0–6)
+- [`SKILL.md`](skill/systems-thinking-audit/SKILL.md) — the workflow the skill follows (Steps 0–7)
 - [`references/framework.md`](skill/systems-thinking-audit/references/framework.md) — the detailed checklist behind each lens and component layer
 - [`references/domains.md`](skill/systems-thinking-audit/references/domains.md) — per-domain translation notes
 - [`evals/`](skill/systems-thinking-audit/evals/) — test prompts, input fixtures, and assertions used to validate changes

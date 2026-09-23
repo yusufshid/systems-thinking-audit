@@ -47,10 +47,11 @@ It applies across domains, not just "software agents" — customer service, sale
 
 1. **Gather material** — whatever's available: prompt, architecture description, codebase, scheduling config, etc.
 2. **Decide scope** — a full audit (all four lenses) or a targeted one (just cron, just the goal definition, just permissions) if that's what was actually asked.
-3. **Analyze through four lenses** — Leverage Points, Feedback Loops, Emergent Behavior, Paradigm/Mental Model — using the detailed checklist in [`references/framework.md`](skill/systems-thinking-audit/references/framework.md), which also covers 10 component layers (tools, memory, permissions, scheduling, model config, data sources, output channels, human interface) and named failure patterns (Meadows' system archetypes: Shifting the Burden, Success to the Successful, Escalation, Policy Resistance, Rule Beating, plus hierarchy balance and unstated assumptions).
+3. **Analyze through four lenses** — Leverage Points, Feedback Loops, Emergent Behavior, Paradigm/Mental Model — using the detailed checklist in [`references/framework.md`](skill/systems-thinking-audit/references/framework.md), which covers 15 component-layer deep-dives (tools, memory, permissions, scheduling, model config, data sources, output channels, human interface, skill portfolios, deployment/rollout, dependency risk, cost/economics, incident response, and more) and named failure patterns (Meadows' system archetypes: Shifting the Burden, Success to the Successful, Escalation, Policy Resistance, Rule Beating, plus hierarchy balance and unstated assumptions).
 4. **Rate each finding's risk** — Critical/High/Medium/Low, by structural severity, not by how easy it is to fix.
 5. **Connect findings into one causal story** (the "System Map") instead of four disconnected piles — this is usually the most useful part of the report, because it tells you where to intervene once rather than four places to patch separately.
 6. **Verify before finalizing** — re-check Critical/High findings against the actual source material, ideally with an independent second pass, instead of trusting a single read.
+7. **Offer to contribute back** — if the audit surfaces a genuinely new pattern not already in this project's checklist, the skill offers (briefly, skippably) to help file it as an issue/PR here, so real-world audits keep improving the framework itself.
 
 The report always follows the same structure: Scope, Summary, Findings (per lens), Recommendations (prioritized, with second-order effects noted), and the System Map.
 
@@ -65,10 +66,14 @@ Actively developed — built and updated in the open. See [`BACKLOG.md`](BACKLOG
 ## Contents
 
 - [`skill/systems-thinking-audit/`](skill/systems-thinking-audit/) — the skill itself:
-  - [`SKILL.md`](skill/systems-thinking-audit/SKILL.md) — the workflow (Steps 0–6) and report template
-  - [`references/framework.md`](skill/systems-thinking-audit/references/framework.md) — the full checklist: four lenses, ten component-layer deep-dives, and Meadows' system archetypes
+  - [`SKILL.md`](skill/systems-thinking-audit/SKILL.md) — the workflow (Steps 0–7) and report template
+  - [`references/framework.md`](skill/systems-thinking-audit/references/framework.md) — the full checklist: four lenses, fifteen component-layer deep-dives, and Meadows' system archetypes
   - [`references/domains.md`](skill/systems-thinking-audit/references/domains.md) — quick per-domain translation notes
   - [`evals/evals.json`](skill/systems-thinking-audit/evals/evals.json) + [`evals/input/`](skill/systems-thinking-audit/evals/input/) — test cases, including the prompt-injection guard test
+- [`dist/systems-thinking-audit.skill`](dist/systems-thinking-audit.skill) — packaged skill file for installing elsewhere
+- [`DESIGN_PRINCIPLES.md`](DESIGN_PRINCIPLES.md) — what every contribution is checked against
+- [`CONTRIBUTING.md`](CONTRIBUTING.md), [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md), [`CONTRIBUTORS.md`](CONTRIBUTORS.md) — how to contribute, and who has
+- [`.github/`](.github/) — issue templates, PR template, and `CODEOWNERS` for the core framework files
 
 ## License
 
