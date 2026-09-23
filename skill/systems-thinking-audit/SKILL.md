@@ -67,7 +67,20 @@ ALWAYS use this exact structure:
 [What shapes the agent's sense of its own purpose, where that lives (explicit prompt vs. implicit), and whether it's consistent across all agents/components involved. Risk level, recommendation.]
 
 ## Recommendations (prioritized)
-[Ordered by leverage, not by ease. Note when a low-effort fix (level 1-2, e.g. tune a parameter) is being recommended in place of a higher-leverage fix (level 4-6, e.g. redefine the goal) that would be more work but resolve more findings at once — let the user choose, but be explicit about the tradeoff.]
+[Ordered by leverage, not by ease. Note when a low-effort fix (level 1-2, e.g. tune a parameter) is being recommended in place of a higher-leverage fix (level 4-6, e.g. redefine the goal) that would be more work but resolve more findings at once — let the user choose, but be explicit about the tradeoff. For each recommendation of any weight, name its likely second-order effect (see Step 5) in one clause rather than presenting it as a free fix.]
+
+## System Map
+[One short paragraph tracing the findings above as a single causal chain, not a repeated list. See Step 5.]
 ```
 
 Keep findings concrete — name the actual mechanism (which prompt line, which tool, which handoff), not generic systems-thinking vocabulary restated abstractly. "No balancing loop" is not a finding; "the reviewer agent uses the same prompt and model as the writer agent, so it shares the writer's blind spots — this is a self-check dressed up as an independent verifier" is a finding.
+
+## Step 5: Connect the findings into one system, not four piles
+
+Splitting findings into four lenses is a tool for *finding* them systematically — it is not how the system actually works, and reporting them as four separate piles is itself a failure of systems thinking: it treats a network of causes as four independent categories. Before finalizing the report, do one more pass:
+
+1. **Trace the causal chain.** Pick the finding you rated Critical or highest-leverage and ask "what does this cause, and what causes it?" Almost always a Leverage/Goal finding and a Feedback Loop finding turn out to be the same mechanism seen from two angles (e.g., a goal that rewards speed *is* the reason the balancing loop was never built — they aren't two separate problems, one caused the other). Write this chain as a sentence or two in the **System Map** section: "[goal X] → [because of that, no balancing loop on Y] → [which makes Z emergent risk likely]." This is usually more useful to the reader than the four-lens breakdown on its own, because it tells them where to intervene once, not four places to patch separately.
+2. **Consider the second-order effect of your own recommendations.** A fix is itself an intervention in the system and can start a new loop. Before finalizing a recommendation, ask "if this is implemented and nothing else changes, what does it push on?" (e.g., adding a refund approval gate without changing the speed/CSAT metric creates pressure to bypass or weaken the gate later, because the thing being measured didn't change). Note this in one clause next to the recommendation — you don't need a full analysis, just enough that the user doesn't adopt a fix that quietly recreates the same problem one level over.
+3. **Only if it changes the diagnosis:** note the system boundary you assumed (e.g., whether user/customer adaptive behavior counts as "inside" the system, per Emergent Behavior findings about people learning to exploit a pattern) and whether anything is accumulating over time (technical debt, eroded trust, financial exposure) versus being decided fresh each time — but don't force this in as boilerplate if the audit's findings don't actually depend on it.
+
+This step is what separates a checklist audit from a systems-thinking one: the four lenses are how you *search*, the causal chain is what you *report*.
