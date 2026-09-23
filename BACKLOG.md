@@ -10,6 +10,8 @@ Tracked in priority order. Check items off as they're built.
 
 ## Real-world stress test (continued)
 
+- [x] **Time-boxed elevation fail-open/fail-closed, and gate-vs-process bypass** — extended Permissions/rules with two points from a real time-boxed unlock mechanism (`/unlock <minutes>` with auto re-lock): (8) does a temporary permission elevation auto-expire (fail-closed) or require an explicit revert (fail-open, one forgotten step from permanent); (9) a gate can be code-enforced and still deliver less protection than it appears to if bypassing its friction also silently skips a deeper process (a review checklist, a changelog entry) the gate was standing in for.
+
 - [x] **Stock outflow and memory-length matching** — extended the "Stock vs. flow" point in Memory/state: (1) a decision-driving stock (blocklist, score, trust level) needs an outflow/expiry, not just an inflow, or errors never get reversed and the mechanism only gets more restrictive over time; (2) a stock's memory length (rolling window, decay rate) needs to match the actual timescale of the risk it's meant to catch — too short and slow-accumulating risk resets out of the window, too long and the loop keeps reacting to already-resolved history. A balancing loop can fire correctly and still be ineffective purely from a badly-tuned window.
 
 - [x] **Skill portfolio checklist** — for agents built from modular skills: coverage (gaps with no matching skill), role clarity/overlap between skills, staleness (a skill's assumptions drifting from the actual system), review/upgrade cadence (is there a governance loop for the skill set itself, and is it actually active), orphaned skills that no longer trigger. Added as a new subsection under the Paradigm lens in `framework.md`.
