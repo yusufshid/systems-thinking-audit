@@ -12,6 +12,8 @@ Tracked in priority order. Check items off as they're built.
 
 ## Real-world stress test (continued)
 
+- [x] **Third-party/vendored skills as a supply-chain dependency** — from a real installed third-party diagram-generation skill with its own careful update-consent language ("the notice is information, not permission... silence is never consent"): distinguish self-authored from vendored skills in the portfolio (same inherited-capability risk as a forked codebase), and check whether any self-update mechanism requires explicit consent or could auto-apply — notified is not the same claim as consented. Added to Skill Portfolio checklist.
+
 - [x] **Recurring review reason signals a classifier fix, not more triage** — from a real human-review skill for flagged items: if the same underlying reason keeps putting items in front of a human reviewer, that's a signal the upstream classifier/rule needs fixing, not evidence the review process is working — continuing to manually triage each instance is Shifting the Burden wearing a human-review costume. Added to Human Interface's volume/batching point.
 
 - [x] **Automation-readiness as an explicit gate, and dormant-loop verification technique** — from a real skill that tracks cron status against live crontab: (Scheduling/triggers 7, new) not everything manual is a gap — check for an explicit, concrete criterion for when something should be automated (vs. "not automated yet" being an unexamined default), since scheduling a check prematurely just produces noise; (Lens 2 point 6, strengthened) verify dormant-loop activation against the live system's actual config (real crontab, real flag value), not a document that claims the schedule/config exists.
