@@ -1,0 +1,73 @@
+---
+name: systems-thinking-audit
+description: Audit an AI agent (single-agent or multi-agent) using a systems-thinking framework — leverage points, feedback loops, emergent behavior, and paradigm/mental model — to find structural risks that ordinary code review or security review miss. Use this whenever the user asks to "audit" an agent's design, wants to know "why does this agent behave weirdly / drift / hallucinate over long runs", asks about feedback loops, leverage points, emergent behavior, or "mental model" of an agent, wants a systemic/architectural review of an agent (not a line-by-line bug hunt), or explicitly mentions systems thinking applied to AI agents. Works from a system prompt, a narrated description of the agent's architecture, and/or its codebase — use whatever the user provides, and ask for more only if a lens genuinely can't be assessed without it. This is a structural/systemic audit, not a code-correctness or security audit — for those, point the user to /code-review or /security-review instead.
+---
+
+# Systems Thinking Audit
+
+An ordinary code review asks "is this line correct?" This audit asks a different question: "given how the pieces interact over time, what behavior will this agent produce that nobody explicitly programmed?" Most of the agent failures that are hardest to debug — drift over long sessions, an agent that technically satisfies its metric while missing the point, two agents that quietly fight each other — are structural. They live in the interaction, not in any one line of code. This audit exists to find those before they show up as a 3am page.
+
+## Step 1: Gather what you can, don't block on what you can't
+
+Accept whatever the user hands you:
+- **A system prompt / instructions file** (a `SKILL.md`, `CLAUDE.md`, agent system prompt, orchestrator prompt)
+- **A narrated description** of the agent — what it does, what tools it has, how many agents are involved, what the loop looks like
+- **A codebase** — orchestrator code, tool definitions, config, prompts embedded in code
+
+You rarely need all three. A system prompt alone is often enough to assess the paradigm and goal-definition lenses; you need the codebase or a narrated architecture to assess feedback loops and emergent-behavior risk properly (you need to know what checks exist and how agents actually call each other, not just what they're told to do).
+
+If something is missing and a specific lens can't be honestly assessed without it, say so explicitly in that section of the report rather than guessing — a confident wrong audit is worse than an honest gap. Don't stall the whole audit over one missing lens.
+
+## Step 2: Analyze through the four lenses
+
+Read `references/framework.md` for the full checklist behind each lens — it has the specific questions to ask and what a red flag looks like. In brief, the four lenses are:
+
+1. **Leverage points** — where does this agent's design actually intervene: a parameter, a feedback delay, information structure, a permission rule, the goal definition, or the paradigm itself? Higher-leverage problems (a misdefined goal) don't get fixed by low-leverage patches (tuning a threshold).
+2. **Feedback loops** — does the agent have any *balancing* loop (something that catches and corrects its own errors), or only *reinforcing* loops (errors compound because nothing pushes back)? Where do correction signals come from, and how independent are they from the thing being checked?
+3. **Emergent behavior** — what could plausibly show up from the *interaction* of steps/agents/tools that isn't visible from reading any single component? This is the lens most people skip because it requires imagining the system running, not just reading it.
+4. **Paradigm / mental model** — what shapes this agent's sense of "what am I actually for"? Is it explicit (a system prompt) or implicit (whatever the base model already believes, or the affordances the tools imply)?
+
+Work through all four even if one seems obviously dominant — problems are often invisible from one lens and glaring from another. A system prompt that reads perfectly well can still have zero balancing loops.
+
+## Step 3: Assign a risk level to each finding
+
+For each finding, rate it:
+- **Critical** — actively producing wrong/harmful behavior now, or a structural gap that guarantees drift with no correction (e.g., no balancing loop at all on an irreversible action)
+- **High** — likely to cause problems under realistic conditions (long sessions, multi-agent handoffs, edge-case inputs) but not guaranteed
+- **Medium** — a real structural weakness, but low-probability or low-cost if it triggers
+- **Low** — worth noting and fixing eventually, but not urgent; often a leverage-point mismatch (fixing a parameter when the real issue is a goal definition) rather than a live risk
+
+Rate the finding on its structural severity, not on how easy it is to fix — a one-line goal-definition fix can still be Critical if the misalignment is severe.
+
+## Step 4: Write the report
+
+ALWAYS use this exact structure:
+
+```markdown
+# Systems Thinking Audit: [agent name]
+
+## Scope
+[What was actually reviewed: system prompt only / architecture description / codebase, and what's missing if anything]
+
+## Summary
+[2-4 sentences: the single biggest structural risk, and the overall pattern if there is one]
+
+## Findings
+
+### Leverage Points
+[One finding per relevant leverage-point level found. For each: what level (parameter / feedback loop / information structure / rules / goal / paradigm), what's actually happening, risk level, recommendation.]
+
+### Feedback Loops
+[For each loop identified: balancing or reinforcing, what signal it uses (self-check / independent verifier / ground truth / human), delay, risk level, recommendation. Explicitly call out if there's NO balancing loop somewhere one is needed.]
+
+### Emergent Behavior Risks
+[Plausible behaviors that could arise from interaction, not from any single component. Risk level, recommendation — usually a structural change (add a check, reduce combinatorial surface, separate a shared bias) rather than a prompt tweak.]
+
+### Paradigm / Mental Model
+[What shapes the agent's sense of its own purpose, where that lives (explicit prompt vs. implicit), and whether it's consistent across all agents/components involved. Risk level, recommendation.]
+
+## Recommendations (prioritized)
+[Ordered by leverage, not by ease. Note when a low-effort fix (level 1-2, e.g. tune a parameter) is being recommended in place of a higher-leverage fix (level 4-6, e.g. redefine the goal) that would be more work but resolve more findings at once — let the user choose, but be explicit about the tradeoff.]
+```
+
+Keep findings concrete — name the actual mechanism (which prompt line, which tool, which handoff), not generic systems-thinking vocabulary restated abstractly. "No balancing loop" is not a finding; "the reviewer agent uses the same prompt and model as the writer agent, so it shares the writer's blind spots — this is a self-check dressed up as an independent verifier" is a finding.

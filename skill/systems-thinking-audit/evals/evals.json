@@ -1,0 +1,47 @@
+{
+  "skill_name": "systems-thinking-audit",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Audit sistem prompt agent customer-support saya ini pakai systems thinking. Filenya di system_prompt.md.",
+      "expected_output": "A structured systems-thinking audit report covering leverage points, feedback loops, emergent behavior, and paradigm/mental model, with risk-rated findings — should catch: no approval gate on irreversible refund action, CSAT/speed metric creating pressure toward unwarranted refunds (goal/proxy-metric misalignment), no balancing loop on refund or ticket-closing decisions.",
+      "files": ["input/system_prompt.md"],
+      "assertions": [
+        "Report uses the four required section headers: Leverage Points, Feedback Loops, Emergent Behavior Risks, Paradigm / Mental Model",
+        "Identifies the autonomous no-approval refund action (issue_refund) as a High or Critical risk",
+        "Identifies the CSAT/resolution-speed metric as a proxy-metric / goal-misalignment issue that could incentivize unwarranted refunds",
+        "Explicitly states there is no balancing loop / human checkpoint on refund or ticket-closing actions",
+        "Every finding has an assigned risk level (Critical/High/Medium/Low)",
+        "Includes a prioritized Recommendations section with concrete, actionable fixes (not generic advice)"
+      ]
+    },
+    {
+      "id": 1,
+      "prompt": "Kenapa multi-agent workflow saya suka menghasilkan hasil yang saling kontradiksi ya? Setupnya: satu orchestrator memanggil 3 subagent reviewer secara paralel untuk mereview sebuah dokumen, semua 3 reviewer pakai system prompt dan model yang sama persis, lalu orchestrator cuma menggabungkan ketiga hasil review itu jadi satu tanpa proses rekonsiliasi konflik — kalau reviewer A bilang bagus dan reviewer B bilang ada bug, laporannya cuma menampilkan keduanya apa adanya.",
+      "expected_output": "A structured systems-thinking audit identifying: the 3 reviewers sharing the same prompt/model as a false sense of independent verification (self-check dressed as independent review), lack of a reconciliation/balancing mechanism for conflicting findings, and recommendations like diversifying reviewer framing/model or adding an explicit reconciliation step.",
+      "files": [],
+      "assertions": [
+        "Report uses the four required section headers: Leverage Points, Feedback Loops, Emergent Behavior Risks, Paradigm / Mental Model",
+        "Explicitly names the shared prompt/model across the 3 reviewers as a false-independence problem (self-check disguised as independent verification)",
+        "Identifies the missing reconciliation step for contradictory findings as a missing balancing loop",
+        "Notes the scope limitation (no system prompt or code available, only a narrated description) rather than fabricating specifics not given",
+        "Every finding has an assigned risk level (Critical/High/Medium/Low)",
+        "Recommendations address the structural fix (diversify reviewers or add reconciliation), not just 'add more instructions'"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "Audit agent saya, ini codebase orchestrator-nya (orchestrator.py).",
+      "expected_output": "A structured systems-thinking audit identifying: 3 researcher agents sharing identical prompt/model (correlated bias, weak independent signal), a retry loop using word-count as a proxy for quality (goal/proxy-metric misalignment risk of padded/verbose output), shared on-disk state file written without concurrency safety, and synthesizer resolving disagreements via 'best judgment' with no ground-truth check.",
+      "files": ["input/orchestrator.py"],
+      "assertions": [
+        "Report uses the four required section headers: Leverage Points, Feedback Loops, Emergent Behavior Risks, Paradigm / Mental Model",
+        "Identifies the word-count > 500 retry condition as a proxy-metric / goal-misalignment risk",
+        "Identifies the 3 researchers using identical prompt and model as a correlated-bias / weak-verification issue",
+        "Flags the synthesizer's 'best judgment' conflict resolution as lacking a ground-truth or independent check",
+        "Every finding names the specific code element involved (e.g. run_with_retry, STATE_PATH, RESEARCHER_PROMPT) rather than describing findings only in the abstract",
+        "Every finding has an assigned risk level (Critical/High/Medium/Low)"
+      ]
+    }
+  ]
+}
