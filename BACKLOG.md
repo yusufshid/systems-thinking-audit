@@ -8,6 +8,10 @@ Tracked in priority order. Check items off as they're built.
 - [x] **"Behavior over time" in the report template.** Done: Step 5 point 4 — for a Critical/High loop finding, state the trajectory (worsening / self-correcting / plateauing) only when it's non-obvious, since that changes urgency even when today's snapshot looks similar. Optional guidance, not a mandatory report section — consistent with §3 (don't force a finding) in DESIGN_PRINCIPLES.md.
 - [x] **Package as a `.skill` file** via `scripts.package_skill` for distribution outside this machine. Done — also had to trim the frontmatter `description` from 1172 to 934 characters (max is 1024), which packaging's validation step caught. Packaged file at `dist/systems-thinking-audit.skill`; evals are intentionally excluded from the distributable package.
 
+## Real-world stress test (continued)
+
+- [x] **Documentation/instruction completeness check** — distinct from "stated vs enforced" (contradiction) and "unstated assumptions" (nobody realized it needed checking): does written guidance exist anywhere for the failure modes and operational decisions this agent/its operators will actually face, or does critical knowledge live only in one person's head or scattered code comments? Added to Paradigm lens point 2 in `framework.md`.
+
 ## Real-world stress test
 
 Audited a real, mature production system (a live Solana LP trading bot with its own independently-built Meadows-style feedback-loop audit practice) as a targeted case, purely to find gaps in our own checklist by comparison. Found and closed 4:
