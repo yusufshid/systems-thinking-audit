@@ -10,6 +10,8 @@ Tracked in priority order. Check items off as they're built.
 
 ## Real-world stress test (continued)
 
+- [x] **Stock outflow and memory-length matching** — extended the "Stock vs. flow" point in Memory/state: (1) a decision-driving stock (blocklist, score, trust level) needs an outflow/expiry, not just an inflow, or errors never get reversed and the mechanism only gets more restrictive over time; (2) a stock's memory length (rolling window, decay rate) needs to match the actual timescale of the risk it's meant to catch — too short and slow-accumulating risk resets out of the window, too long and the loop keeps reacting to already-resolved history. A balancing loop can fire correctly and still be ineffective purely from a badly-tuned window.
+
 - [x] **Skill portfolio checklist** — for agents built from modular skills: coverage (gaps with no matching skill), role clarity/overlap between skills, staleness (a skill's assumptions drifting from the actual system), review/upgrade cadence (is there a governance loop for the skill set itself, and is it actually active), orphaned skills that no longer trigger. Added as a new subsection under the Paradigm lens in `framework.md`.
 
 - [x] **Documentation/instruction completeness check** — distinct from "stated vs enforced" (contradiction) and "unstated assumptions" (nobody realized it needed checking): does written guidance exist anywhere for the failure modes and operational decisions this agent/its operators will actually face, or does critical knowledge live only in one person's head or scattered code comments? Added to Paradigm lens point 2 in `framework.md`.
