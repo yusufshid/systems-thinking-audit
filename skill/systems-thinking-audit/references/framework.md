@@ -32,6 +32,16 @@ For every check/validation/review mechanism you can find in the system, answer:
 4. **What's the gain?** Does the correction over-react to small signals (causing oscillation — the agent flip-flopping) or under-react (correction too weak to matter)?
 5. **Is there a balancing loop at all** on every action that's expensive to reverse (sending a message, deleting data, spending money, publishing)? If not, that's usually a Critical or High finding regardless of how good everything else looks.
 
+### Automated / scheduled triggers (cron, `/loop`, recurring tasks)
+
+If the agent runs on a schedule rather than only in response to a human, the trigger mechanism itself is part of the feedback loop and needs its own check — frequency and impact together determine how dangerous a bad loop can get before anyone notices:
+
+1. **Frequency sets the delay.** A cron interval isn't just an implementation detail — it's the correction delay for any reinforcing loop the agent might get stuck in. Every run between "something went wrong" and "a human is likely to look" is a run where the problem could compound unnoticed. A tight interval on a low-stakes check is fine; a tight interval on something that can take irreversible action is a Critical-risk combination regardless of how good the agent's own logic is.
+2. **Impact-per-run sets the gain.** Does each scheduled run only read/report, or does it act (send messages, modify data, deploy, spend money)? High frequency + high impact-per-run is the worst combination: a runaway loop gets many chances to do damage before a human's response time (which doesn't scale down with the cron interval) can catch up.
+3. **Overlap risk.** If a run can take longer than the interval between runs, check whether runs can overlap. Overlapping runs on shared state is a classic accidental reinforcing loop: each overlap slows the system further, increasing the odds of the next overlap too — and it's rarely intentional, just a mismatch between an interval chosen for convenience and actual task duration under load.
+4. **Retry/failure behavior.** Does a failed run retry immediately next cycle with no backoff? If the failure cause is persistent (a downstream API down, a bad state), a naive fixed-interval retry just re-applies the same failing action over and over, which can itself be the reinforcing loop (repeated load on an already-struggling dependency, repeated partial writes, repeated alerts).
+5. **Notification fatigue as a dying balancing loop.** If a human is the balancing mechanism (they get paged/notified and intervene), check what happens under sustained failure: a schedule that pages on every failed run, with no escalation or de-duplication, trains the human to mute or ignore it — the balancing loop doesn't just weaken, it can go to zero exactly when it's needed most.
+
 ## Lens 3: Emergent Behavior
 
 This lens requires imagining the system *running*, not just reading its parts. Ask:
