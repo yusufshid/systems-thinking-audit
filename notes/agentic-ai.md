@@ -9,7 +9,7 @@ Satu agent LLM jarang berdiri sendiri — berinteraksi dengan tools, memory, age
 - **Reinforcing loop**: keputusan salah → error masuk lagi ke context → agent makin "yakin" dengan asumsi salah → error menumpuk (contoh: hallucination yang menumpuk di multi-turn tool use).
 - **Balancing loop**: ada mekanisme koreksi — validasi output, human-in-the-loop, atau reviewer agent — yang menstabilkan sistem, bukan membiarkannya liar. Lihat [[feedback-loops]].
 
-## Emergent behavior dari multi-agent
+## Emergent behavior dari multi-agent — lihat [[emergent-behavior]]
 Saat beberapa agent kerja bareng (orchestrator + subagent), perilaku sistem sering muncul dari *interaksi antar agent*, bukan dari satu agent yang dirancang pintar sendirian. Bisa saling redundant, saling menunggu, atau saling melengkapi kalau pembagian tanggung jawab jelas.
 
 ## Leverage points (ala Donella Meadows) — lihat [[leverage-points]]
