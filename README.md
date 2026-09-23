@@ -25,6 +25,26 @@
 
 A Claude Code Skill that audits AI agents (single-agent or multi-agent) using a systems-thinking framework — leverage points, feedback loops, emergent behavior, and paradigm/mental model — to find structural risks that ordinary code review or security review miss. Built and tested in public.
 
+## Installation
+
+**In Claude Code:**
+- **Personal (all projects):** clone this repo, then copy the skill folder into your personal skills directory:
+  ```bash
+  cp -r skill/systems-thinking-audit ~/.claude/skills/systems-thinking-audit
+  ```
+- **Project-scoped (one repo):** same idea, into that project's `.claude/skills/` instead:
+  ```bash
+  cp -r skill/systems-thinking-audit /path/to/your-project/.claude/skills/systems-thinking-audit
+  ```
+- **From the packaged file:** grab [`dist/systems-thinking-audit.skill`](dist/systems-thinking-audit.skill) and install it the way your Claude Code client supports (drag into the app, or its "install a skill file" flow).
+
+Either way, Claude Code picks it up automatically — no restart or config needed, and no eval/API dependencies to install. It just triggers based on the description in `SKILL.md`, or you can invoke it directly.
+
+**Outside Claude Code (Codex, Cursor, Windsurf, and similar):** the framework itself (`references/framework.md`, `references/domains.md`, `DESIGN_PRINCIPLES.md`) is plain markdown with no Claude-Code-specific dependency — it's a methodology, not code. What's Claude-Code-specific is just the `SKILL.md` frontmatter that makes it auto-trigger. To use this elsewhere:
+- Point your tool's own custom-instructions mechanism (`AGENTS.md` for Codex, a Cursor/Windsurf rules file, etc.) at `SKILL.md`'s body content, or reference `references/framework.md` directly as context when asking for an audit.
+- Step 6's "spawn an independent subagent" instruction is already written as conditional — it degrades gracefully to self-verification if your platform has no sub-agent/task-spawning capability, no changes needed.
+- References to Claude Code specifics (`/code-review`, `/security-review`, `.claude/skills/`) are pointers to sibling tools in that ecosystem — swap in whatever your platform's equivalent is, or drop the reference if there isn't one.
+
 ## What it's for
 
 Most AI agent failures that are hard to debug — drift over long sessions, an agent that technically satisfies its metric while missing the point, two agents that quietly contradict each other — aren't bugs in any single line of code. They come from how the pieces interact over time: what the agent is optimized for, whether anything catches its own mistakes, what its tools quietly imply, how much autonomy it has and over what.
