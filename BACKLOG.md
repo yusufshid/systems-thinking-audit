@@ -10,6 +10,8 @@ Tracked in priority order. Check items off as they're built.
 
 - [~] **`PORTABILITY.md`** — first draft written (general knowledge, not hands-on testing per platform; each platform section is explicitly confidence-labeled). Still needs verification/expansion from someone who's actually run this on Codex, Cursor, Windsurf, Copilot, Cline, Aider, or Antigravity — good first contribution, see CONTRIBUTORS.md's recognition loop.
 
+- [x] **Emergent Behavior finally gets real-world insight** — from a real, dangerous production finding (K0): (6) a shared control mechanism (one `stopCronJobs()` function) meant to pause one feature (new entries) silently also disabled an unrelated, more critical one (exit/stop-loss monitoring) — neither feature's own logic was wrong, the danger was purely in the shared implementation; (7) a uniform "stop when uncertain" fail-safe policy is safe for risk-increasing actions but dangerous for risk-decreasing ones (skipping an exit on stale data) — caution policies need to be direction-aware, not blindly uniform. Added to Lens 3.
+
 ## Real-world stress test (continued)
 
 - [x] **Tools/affordances finally gets real-world insight** — from real ops scripts: (7) sensitive-input channel (stdin vs CLI arg vs file) is itself a security-relevant design choice, since args/files leak in ways stdin doesn't; (8) a function that looks like a pure read can have hidden side effects (syncing state, marking things changed on empty results) making it unsafe to reuse for testing/probing — verify before assuming "just reading" is safe, and build a genuinely separate probe path if not; plus a smaller note on tools that silently accept empty input when their interactive-terminal assumption is violated in a different invocation context.
