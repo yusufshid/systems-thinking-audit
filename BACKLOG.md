@@ -22,6 +22,8 @@ Tracked in priority order. Check items off as they're built.
 
 - [x] **System Archetypes gains a 6th pattern: Tragedy of the Commons** — from real Meridian evidence (multiple independent monitoring/dashboard/cron processes each drawing on the same rate-limited RPC/API quota): multiple components each individually reasonable, sharing a finite resource with no one tracking aggregate consumption across all of them, can exhaust it faster than any single consumer's own usage suggests. The fix is shared accounting of total consumption, not a behavioral fix to any one "greedy" component (none of them individually is). Updated in `framework.md`, `SKILL.md`, and README's archetype list.
 
+- [x] **Shifting the Burden gains a second, sharper example**: a recurring credential-pasted-into-chat incident "fixed" each time by manual rotation rather than a structural prevention (a pre-send scanner, a workflow that never exposes the raw secret) — manual vigilance repeated in place of a structural fix is the same pattern as a retry loop, just in a security-process flavor.
+
 ## Real-world stress test (continued)
 
 - [x] **Tools/affordances finally gets real-world insight** — from real ops scripts: (7) sensitive-input channel (stdin vs CLI arg vs file) is itself a security-relevant design choice, since args/files leak in ways stdin doesn't; (8) a function that looks like a pure read can have hidden side effects (syncing state, marking things changed on empty results) making it unsafe to reuse for testing/probing — verify before assuming "just reading" is safe, and build a genuinely separate probe path if not; plus a smaller note on tools that silently accept empty input when their interactive-terminal assumption is violated in a different invocation context.
