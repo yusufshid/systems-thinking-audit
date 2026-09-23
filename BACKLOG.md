@@ -8,6 +8,10 @@ Tracked in priority order. Check items off as they're built.
 - [ ] **"Behavior over time" in the report template.** Currently the audit is a snapshot; add lightweight guidance (not a mandatory section — only when it changes the diagnosis) for whether a finding trends toward worse/better if left running, alongside the existing stock-vs-flow note in Step 5.
 - [ ] **Package as a `.skill` file** via `scripts.package_skill` for distribution outside this machine.
 
+## Validation log
+
+- **Iteration 3** (after all 10 component-layer checklists + Orchestrator/Leader section + domains.md were added): re-ran the same 3 evals. All 3 reports stayed focused — each explicitly noted which of the 10 checklists didn't apply rather than padding them in, and 2 of 3 runs used Step 6's independent-subagent verification successfully (all claims confirmed). Confirms the much larger `references/framework.md` didn't cause bloat or dilute report quality.
+
 ## Component-layer depth
 
 Step 1 of SKILL.md now lists all 10 layers of an agentic system as *acceptable input*, but the checklist depth in `references/framework.md` still only goes deep on a couple of them (Leverage Points and Feedback Loops cover most layers generically; Scheduling/triggers got a dedicated cron subsection). Build out the rest one at a time, the same way cron was done — a dedicated subsection under whichever lens fits, with the same shape: what to look for, what a red flag looks like.
