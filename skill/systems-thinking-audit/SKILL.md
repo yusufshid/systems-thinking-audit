@@ -1,20 +1,36 @@
 ---
 name: systems-thinking-audit
-description: Audit an AI agent (single-agent or multi-agent) using a systems-thinking framework — leverage points, feedback loops, emergent behavior, and paradigm/mental model — to find structural risks that ordinary code review or security review miss. Use this whenever the user asks to "audit" an agent's design, wants to know "why does this agent behave weirdly / drift / hallucinate over long runs", asks about feedback loops, leverage points, emergent behavior, or "mental model" of an agent, wants a systemic/architectural review of an agent (not a line-by-line bug hunt), or explicitly mentions systems thinking applied to AI agents. Works from a system prompt, a narrated description of the agent's architecture, and/or its codebase — use whatever the user provides, and ask for more only if a lens genuinely can't be assessed without it. This is a structural/systemic audit, not a code-correctness or security audit — for those, point the user to /code-review or /security-review instead.
+description: Audit an AI agent (single-agent or multi-agent) using a systems-thinking framework — leverage points, feedback loops, emergent behavior, and paradigm/mental model — to find structural risks that ordinary code review or security review miss. Use this whenever the user asks to "audit" an agent's design, wants to know "why does this agent behave weirdly / drift / hallucinate over long runs", asks about feedback loops, leverage points, emergent behavior, or "mental model" of an agent, wants a systemic/architectural review of an agent (not a line-by-line bug hunt), or explicitly mentions systems thinking applied to AI agents. Also use for a narrower, targeted ask on just one aspect — "cek feedback loop-nya aja," "just look at the cron schedule," "is the goal definition okay" — not only a full four-lens audit. Works from a system prompt, a narrated description of the agent's architecture, and/or its codebase — use whatever the user provides, and ask for more only if a lens genuinely can't be assessed without it. This is a structural/systemic audit, not a code-correctness or security audit — for those, point the user to /code-review or /security-review instead.
 ---
 
 # Systems Thinking Audit
 
 An ordinary code review asks "is this line correct?" This audit asks a different question: "given how the pieces interact over time, what behavior will this agent produce that nobody explicitly programmed?" Most of the agent failures that are hardest to debug — drift over long sessions, an agent that technically satisfies its metric while missing the point, two agents that quietly fight each other — are structural. They live in the interaction, not in any one line of code. This audit exists to find those before they show up as a 3am page.
 
+## Step 0: Decide the scope — full or targeted
+
+Run this skill either way:
+- **Full audit** (default): the request is general ("audit this agent," "why does this keep drifting," no specific aspect named) — work through all four lenses in Step 2.
+- **Targeted audit**: the request names a specific concern ("cek cron-nya aja," "just look at the feedback loops," "is the goal definition okay here," "audit skill ini soal permission-nya doang"). Don't force the other three lenses into the report just to keep the template complete — a targeted audit that thoroughly covers one lens is more useful than a shallow pass over four. Still use Step 4's report structure, but write "Out of scope for this audit — see [what was requested] only" under the sections that weren't asked for, so the reader knows the omission was deliberate, not an oversight.
+
+Either way, the same steps (1-6) apply — scope only changes how many of the four lenses you fill in, not the process for the ones you do.
+
 ## Step 1: Gather what you can, don't block on what you can't
 
-Accept whatever the user hands you:
-- **A system prompt / instructions file** (a `SKILL.md`, `CLAUDE.md`, agent system prompt, orchestrator prompt)
-- **A narrated description** of the agent — what it does, what tools it has, how many agents are involved, what the loop looks like
-- **A codebase** — orchestrator code, tool definitions, config, prompts embedded in code
+An agentic system is made of more than its prompt. Accept whatever the user hands you, and know what else exists to ask for if a lens can't be assessed without it:
 
-You rarely need all three. A system prompt alone is often enough to assess the paradigm and goal-definition lenses; you need the codebase or a narrated architecture to assess feedback loops and emergent-behavior risk properly (you need to know what checks exist and how agents actually call each other, not just what they're told to do).
+- **Instructions / paradigm** — system prompt, `SKILL.md`, `CLAUDE.md`, agent persona. Usually enough on its own for the Paradigm and Goal-definition parts of Leverage Points.
+- **Tools / affordances** — the tool list and schemas, MCP servers connected. Shapes what the agent can even do, which shapes what it tends to do.
+- **Orchestration / codebase** — the actual code: control flow, retry/error handling, how agents call each other. This is ground truth for Feedback Loops and Emergent Behavior — what's written in a prompt and what the code actually does can diverge.
+- **Scheduling / triggers** — cron, `/loop`, webhooks, anything that runs the agent without a human asking. Determines the frequency/impact/overlap questions under Feedback Loops (see `references/framework.md`).
+- **Memory / state** — conversation history, persistent memory files, shared state between agents. This is the information-structure lens in Leverage Points, and often where slow-accumulating problems live (see Step 5's stock-vs-flow note).
+- **Permissions / rules** — settings/config that gate what the agent can do autonomously vs. needs approval for.
+- **Model / runtime config** — which model, temperature, effort level. Usually a low-leverage detail, but relevant when it's a secondary contributor (e.g., nonzero temperature layered on top of an already-weak verification setup).
+- **Data / ground-truth sources** — what external data the agent reads (APIs, files, databases). Determines how strong a correction signal is actually available to it.
+- **Output / distribution** — where results go: messages sent, files written, deployments triggered. Determines blast radius.
+- **Human interface** — how people are notified or asked to approve. Often the intended balancing loop — check whether it's actually being used as one (see the notification-fatigue point in `references/framework.md`).
+
+You rarely need all of these — a system prompt alone is often enough for Paradigm and Goals; you need the codebase, scheduling config, or a narrated architecture for Feedback Loops and Emergent Behavior (you need to know what checks exist and how agents actually call each other, not just what they're told to do).
 
 If something is missing and a specific lens can't be honestly assessed without it, say so explicitly in that section of the report rather than guessing — a confident wrong audit is worse than an honest gap. Don't stall the whole audit over one missing lens.
 
