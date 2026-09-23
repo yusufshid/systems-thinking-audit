@@ -48,6 +48,8 @@ Most AI agent failures that are hard to debug — drift over long sessions, an a
 
 This skill exists to find those risks **before** they show up as a real incident, by asking structural questions instead of "is this line correct?" It is **not** a substitute for `/code-review` (correctness bugs) or `/security-review` (vulnerabilities) — use those for that. This skill's job is the layer above both: is the system built so that being wrong gets caught, or built so that being wrong compounds silently.
 
+It's built to complement, not duplicate, established security taxonomies — checklist items are cross-referenced against the [OWASP GenAI Security Project's Top 10 for Agentic Applications](https://genai.owasp.org/) where a direct correspondence exists (see `references/framework.md`'s intro), and gaps found through that cross-reference are folded in rather than left to be independently rediscovered.
+
 ## When to use it
 
 Reach for this skill when:

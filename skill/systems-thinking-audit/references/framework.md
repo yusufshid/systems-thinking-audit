@@ -2,6 +2,8 @@
 
 Detailed checklists for each of the four lenses. This file has grown large (four lenses, fifteen component-layer subsections) — for a **full audit**, read it in full once; for a **targeted audit** (Step 0), use the contents below to jump to only the lens/subsection the request actually named, rather than reading the whole file. Reading 60+KB of checklist to answer "just check the cron schedule" is exactly the context-budget cost this file's own Skill Portfolio section warns against.
 
+**Relationship to OWASP's Agentic AI security work**: this framework is structural/systemic (root-cause, cross-cutting a system's design), not a vulnerability checklist — it complements rather than replaces the [OWASP GenAI Security Project's Top 10 for Agentic Applications](https://genai.owasp.org/) (ASI01–ASI10, published 2025-12-09). Sections below are tagged with the ASI risk they overlap where a direct correspondence exists; three gaps this framework didn't independently cover were found by cross-referencing that list and added (Tools/affordances point 9, Orchestrator point 11, Emergent Behavior point 8). For a security-vulnerability audit (injection, auth bypass, etc.) rather than a structural one, use `/security-review` alongside this skill, not instead of it.
+
 ## Contents
 
 - **Lens 1: Leverage Points** — [Memory / state](#memory--state) · [Permissions / rules](#permissions--rules) · [Output / distribution](#output--distribution) · [Model / runtime config](#model--runtime-config) · [Deployment / rollout](#deployment--rollout-changes-to-the-agent-itself-not-its-outputs) · [Dependency / supply-chain risk](#dependency--supply-chain-risk)
@@ -25,7 +27,7 @@ Based on Donella Meadows' hierarchy — from lowest to highest leverage. When yo
 
 For each finding, ask: **is the fix being proposed at the same level as the problem, or one level below it?** A goal-level problem needs a goal-level fix, not a parameter tweak.
 
-### Memory / state
+### Memory / state (overlaps OWASP ASI06, Memory & Context Poisoning)
 
 This is the Information Structure level (3) in practice — what persists, who can read or write it, and whether it still matches reality. Memory bugs are usually invisible in any single call and only show up as drift over many calls, which is exactly why they're easy to miss in a static read.
 
@@ -41,7 +43,7 @@ This is the Information Structure level (3) in practice — what persists, who c
 8. **Unbounded growth and recency bias.** Does memory/context ever get pruned or summarized, or does it grow indefinitely? Beyond the obvious cost/context-window concern, unpruned history means an early wrong fact and a later correction can both sit in context with no signal about which one should be trusted — the model has no structural reason to prefer the correction unless something explicitly marks the earlier entry as superseded.
 9. **Memory as an unverified self-check.** If a later step trusts what an earlier step wrote to memory as if it were verified fact, that's the same self-check-dressed-as-verification pattern from Lens 2's signal-source ranking, just spread across time instead of across two calls in one turn. A hallucinated or wrong entry, once written, can be treated with full confidence by everything that reads it afterward.
 
-### Permissions / rules
+### Permissions / rules (overlaps OWASP ASI03, Identity & Privilege Abuse)
 
 This is the Rules level (4) in practice — evaluating an actual permission/settings config, not just noting whether a gate exists.
 
@@ -87,7 +89,7 @@ This is distinct from Output/distribution above: that section is about where a *
 4. **Is concurrent modification detected before a deploy starts, not just after it conflicts?** When more than one person or session can change the same production system, check for a step that looks for signs of a change already in progress (a recent modification timestamp, a lock, an active session marker) before beginning a deploy — not just a merge-conflict discovered after two changes already collided. Catching this before touching anything is cheap; catching it after both changes are half-applied to a live system is a much more expensive place to discover the same problem.
 5. **Does the actual apply mechanism match what the deploy process assumes?** "Restart" and "recreate"/"reload" can be meaningfully different operations — a restart that doesn't re-read a changed config file, environment variable, or mounted volume will leave the old configuration silently running while everything about the deploy looks like it succeeded (the process is up, no errors logged). Verify which specific action is required for a given kind of change to actually take effect, rather than assuming the most familiar or lightest-weight operation ("just restart it") always suffices.
 
-### Dependency / supply-chain risk
+### Dependency / supply-chain risk (overlaps OWASP ASI04, Agentic Supply Chain Vulnerabilities)
 
 The agent depends on things outside its own design — a model provider, an RPC/API endpoint, a third-party library — and the health of those dependencies isn't something the system's own good design can guarantee. This is usually a smaller, lower-priority section relative to the others in this file, but worth a quick pass when the audited material shows the actual dependencies in use.
 
@@ -147,7 +149,7 @@ Lens 2's signal-source ranking names "environment ground truth" as the strongest
 11. **A new external input channel that bypasses an already-established verification standard is a bigger risk than its content alone suggests.** If the rest of the system consistently verifies external signals before they influence a decision (a corroboration requirement, an overfitting check, any of the other gates this framework catalogs), a newly added data source that feeds straight into a prompt or a decision with none of that verification isn't just "one more unverified source" — it's a source that breaks the system's own established pattern, which is itself informative: it suggests the addition wasn't evaluated against the same bar as everything else, whether because it arrived as a side effect of something else (see Inherited capabilities, Dependency/supply-chain) or because "just prompt text" felt low-stakes enough to skip the usual gate. Treat a verification-standard mismatch between one channel and the rest of the system as a finding in its own right, separate from whatever the channel's content turns out to be.
 12. **Isolate less-trusted data from persistent stocks, not just from the current decision.** When a new, less-verified data source is integrated, check where its influence is allowed to reach: does it affect only the immediate decision (a flow — contained, and wrong only once if the data is bad), or can it write into a stock that accumulates and shapes future decisions (a scoring mechanism, a learned-rule set, a reputation system)? The same untrusted input is far lower-risk when walled off from a system's stocks than when it has a path — even an indirect one — into something that persists and compounds. This connects Memory/state's stock-vs-flow question directly to source trust: the less trusted a source, the more deliberately its blast radius should be limited to flows, and the more suspicious a path from that source into any stock should be.
 
-### Human interface
+### Human interface (overlaps OWASP ASI09, Human-Agent Trust Exploitation)
 
 Lens 2's signal-source ranking calls human-in-the-loop "strong but slow/expensive" — this section checks whether a human checkpoint actually delivers that strength in practice, since a human notified badly provides almost none of it.
 
@@ -221,7 +223,7 @@ Ask where the agent's sense of "what am I for" actually comes from, and whether 
 5. **Consistency across multi-agent systems** — if there's more than one agent, do they share a paradigm, or does each subagent implicitly believe something different about the system's purpose? Divergent paradigms between agents is a common, underrated source of the kind of emergent behavior in Lens 3.
 6. **Unstated assumptions.** The explicit paradigm is what the prompt says the agent is for; underneath that is whatever the system assumes is true and never states or checks anywhere — "the customer is telling the truth," "the data source is current," "there's only ever one instance of this running." Ask directly: what does this system act as if it can take for granted, that nobody wrote down and nothing verifies? An unstated assumption is more dangerous than a stated one precisely because there's no line to edit when it turns out to be wrong — find it by asking what would break silently, not loudly, if the assumption failed.
 
-### Tools / affordances
+### Tools / affordances (overlaps OWASP ASI02, Tool Misuse)
 
 A tool list isn't a neutral menu — what's on it, and how each option is described, quietly tells the agent what kind of situation it's in and what a reasonable response looks like. Read the actual tool schemas and descriptions (not just the prompt's summary of them) and check:
 
