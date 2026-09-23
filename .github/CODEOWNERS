@@ -1,0 +1,5 @@
+# Core framework files always need a maintainer review, regardless of who opens the PR —
+# this is the rules-level enforcement of the balancing loop described in DESIGN_PRINCIPLES.md.
+/skill/systems-thinking-audit/SKILL.md @yusufshid
+/skill/systems-thinking-audit/references/ @yusufshid
+/DESIGN_PRINCIPLES.md @yusufshid

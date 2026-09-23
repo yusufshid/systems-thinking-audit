@@ -2,6 +2,8 @@
 
 This repo is a single Claude Code Skill (`skill/systems-thinking-audit/`) plus its checklist reference and eval suite. Contributions are welcome — a few things to know before opening an issue or PR:
 
+**Read [`DESIGN_PRINCIPLES.md`](DESIGN_PRINCIPLES.md) first.** It's the reference point every PR gets checked against — not a bureaucratic hurdle, but the fastest way to get a PR merged without back-and-forth, since a change that clearly serves one of those principles is easy to say yes to. The PR template asks you to name which principle(s) your change serves.
+
 ## What's here
 - [`SKILL.md`](skill/systems-thinking-audit/SKILL.md) — the workflow the skill follows (Steps 0–6)
 - [`references/framework.md`](skill/systems-thinking-audit/references/framework.md) — the detailed checklist behind each lens and component layer
@@ -27,3 +29,6 @@ Add a new entry to `evals/evals.json` with a `prompt`, `expected_output`, and co
 
 ## Issues
 Bug reports, unclear checklist items, or domains that don't map well to the framework are all welcome as issues — include what you were auditing (or a sanitized version of it) and what the skill got wrong or missed.
+
+## Recognition
+A merged PR that clearly follows [`DESIGN_PRINCIPLES.md`](DESIGN_PRINCIPLES.md) gets its author added to [`CONTRIBUTORS.md`](CONTRIBUTORS.md) — this is deliberate, not automatic: the project wants contributions that reinforce its direction to be visibly rewarded, the same way [Success to the Successful](skill/systems-thinking-audit/references/framework.md) works when it's used on purpose instead of by accident. If you're looking for a model of what a well-aligned change looks like, the commit history on `skill/systems-thinking-audit/references/framework.md` is a running example — each addition names a mechanism, gives a red-flag case, and states which lens it belongs to.
