@@ -40,10 +40,7 @@ A Claude Code Skill that audits AI agents (single-agent or multi-agent) using a 
 
 Either way, Claude Code picks it up automatically — no restart or config needed, and no eval/API dependencies to install. It just triggers based on the description in `SKILL.md`, or you can invoke it directly.
 
-**Outside Claude Code (Codex, Cursor, Windsurf, and similar):** the framework itself (`references/framework.md`, `references/domains.md`, `DESIGN_PRINCIPLES.md`) is plain markdown with no Claude-Code-specific dependency — it's a methodology, not code. What's Claude-Code-specific is just the `SKILL.md` frontmatter that makes it auto-trigger. To use this elsewhere:
-- Point your tool's own custom-instructions mechanism (`AGENTS.md` for Codex, a Cursor/Windsurf rules file, etc.) at `SKILL.md`'s body content, or reference `references/framework.md` directly as context when asking for an audit.
-- Step 6's "spawn an independent subagent" instruction is already written as conditional — it degrades gracefully to self-verification if your platform has no sub-agent/task-spawning capability, no changes needed.
-- References to Claude Code specifics (`/code-review`, `/security-review`, `.claude/skills/`) are pointers to sibling tools in that ecosystem — swap in whatever your platform's equivalent is, or drop the reference if there isn't one.
+**Outside Claude Code (Codex, Cursor, Windsurf, and similar):** the framework itself (`references/framework.md`, `references/domains.md`, `DESIGN_PRINCIPLES.md`) is plain markdown with no Claude-Code-specific dependency — it's a methodology, not code. What's Claude-Code-specific is just the `SKILL.md` frontmatter that makes it auto-trigger. See [`PORTABILITY.md`](PORTABILITY.md) for a first-draft, platform-by-platform breakdown (Codex/`AGENTS.md`, Cursor Rules, Windsurf, Copilot, Cline, Aider, Antigravity) — written from general knowledge rather than hands-on testing on each one, so corrections from real usage are especially welcome.
 
 ## What it's for
 
