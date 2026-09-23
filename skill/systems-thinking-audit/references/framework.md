@@ -17,6 +17,18 @@ Based on Donella Meadows' hierarchy — from lowest to highest leverage. When yo
 
 For each finding, ask: **is the fix being proposed at the same level as the problem, or one level below it?** A goal-level problem needs a goal-level fix, not a parameter tweak.
 
+### Memory / state
+
+This is the Information Structure level (3) in practice — what persists, who can read or write it, and whether it still matches reality. Memory bugs are usually invisible in any single call and only show up as drift over many calls, which is exactly why they're easy to miss in a static read.
+
+1. **Stock vs. flow.** Separate what accumulates across calls/sessions (a memory file, a shared database, running totals) from what's decided fresh each time. A stock is where a small, repeated bias compounds silently — a flow re-derives its answer every time, so it can't drift the same way. When you find a finding elsewhere in the audit (a goal misalignment, a missing check), ask whether its effect is a one-off decision or something that accumulates in a stock — that changes both the urgency and the fix (a bad flow-level decision self-corrects next call; a bad stock keeps being wrong until something explicitly corrects it).
+2. **Write discipline.** Is something written to shared state without anything ever reading it back to validate or use it (dead state that misdescribes the architecture — see the `shared_state.json` pattern: a comment claims coordination that the code doesn't implement)? Conversely, is state read and trusted without checking whether it's still valid, or who last wrote it and why?
+3. **Concurrent access.** If more than one process/agent/run can write the same store, what happens on overlap — last-write-wins silently clobbering another run's data, or an actual lock/versioning scheme? This is the same overlap-risk question as scheduled triggers, applied to shared storage instead of shared execution time.
+4. **Staleness.** Is cached or stored state ever invalidated, or can a decision be made against information that was true when written but isn't anymore (a cached order status, a customer history snapshot)? A structure with no staleness handling is implicitly asserting "this never changes," which is rarely actually true.
+5. **Visibility asymmetry.** In a multi-agent system, does each agent see the same state, or does each hold a private view that can silently diverge from the others'? Two agents acting on different beliefs about the same shared reality is a structural setup for contradictory or duplicated actions, independent of how good either agent's individual reasoning is.
+6. **Unbounded growth and recency bias.** Does memory/context ever get pruned or summarized, or does it grow indefinitely? Beyond the obvious cost/context-window concern, unpruned history means an early wrong fact and a later correction can both sit in context with no signal about which one should be trusted — the model has no structural reason to prefer the correction unless something explicitly marks the earlier entry as superseded.
+7. **Memory as an unverified self-check.** If a later step trusts what an earlier step wrote to memory as if it were verified fact, that's the same self-check-dressed-as-verification pattern from Lens 2's signal-source ranking, just spread across time instead of across two calls in one turn. A hallucinated or wrong entry, once written, can be treated with full confidence by everything that reads it afterward.
+
 ## Lens 2: Feedback Loops
 
 For every check/validation/review mechanism you can find in the system, answer:
