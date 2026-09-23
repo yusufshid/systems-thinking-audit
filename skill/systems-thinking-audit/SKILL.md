@@ -40,7 +40,7 @@ If the agent being audited is in a specific domain (sales, trading, marketing, c
 
 ## Step 2: Analyze through the four lenses
 
-Read `references/framework.md` for the full checklist behind each lens — it has the specific questions to ask and what a red flag looks like. In brief, the four lenses are:
+Read `references/framework.md` for the full checklist behind each lens — it has the specific questions to ask and what a red flag looks like. It has grown large: for a full audit, read it in full; for a targeted audit (Step 0), use its own Contents section to jump straight to the relevant lens/subsection instead of reading the whole file. In brief, the four lenses are:
 
 1. **Leverage points** — where does this agent's design actually intervene: a parameter, a feedback delay, information structure, a permission rule, the goal definition, or the paradigm itself? Higher-leverage problems (a misdefined goal) don't get fixed by low-leverage patches (tuning a threshold).
 2. **Feedback loops** — does the agent have any *balancing* loop (something that catches and corrects its own errors), or only *reinforcing* loops (errors compound because nothing pushes back)? Where do correction signals come from, and how independent are they from the thing being checked? If the agent runs on a schedule (cron, `/loop`, a recurring task) rather than only on-demand, the schedule itself is part of this lens — see the "Automated / scheduled triggers" section in `references/framework.md` for frequency/impact/overlap/retry checks specific to that.

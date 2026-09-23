@@ -1,6 +1,14 @@
 # Framework Reference
 
-Detailed checklists for each of the four lenses. Read the relevant section as you work through Step 2 of SKILL.md.
+Detailed checklists for each of the four lenses. This file has grown large (four lenses, fifteen component-layer subsections) — for a **full audit**, read it in full once; for a **targeted audit** (Step 0), use the contents below to jump to only the lens/subsection the request actually named, rather than reading the whole file. Reading 60+KB of checklist to answer "just check the cron schedule" is exactly the context-budget cost this file's own Skill Portfolio section warns against.
+
+## Contents
+
+- **Lens 1: Leverage Points** — [Memory / state](#memory--state) · [Permissions / rules](#permissions--rules) · [Output / distribution](#output--distribution) · [Model / runtime config](#model--runtime-config) · [Deployment / rollout](#deployment--rollout-changes-to-the-agent-itself-not-its-outputs) · [Dependency / supply-chain risk](#dependency--supply-chain-risk)
+- **Lens 2: Feedback Loops** — [Automated / scheduled triggers](#automated--scheduled-triggers-cron-loop-recurring-tasks) · [Data / ground-truth sources](#data--ground-truth-sources) · [Human interface](#human-interface) · [Cost / economics](#cost--economics-as-a-feedback-signal) · [Incident response / postmortem loop](#incident-response--postmortem-loop)
+- **Lens 3: Emergent Behavior** — [Orchestrator / leader agents](#orchestrator--leader-agents-an-agent-whose-job-is-managing-other-agents)
+- **Lens 4: Paradigm / Mental Model** — [Tools / affordances](#tools--affordances) · [Skill portfolio](#skill-portfolio-for-agents-built-from-modular-skillsinstructions)
+- [System Archetypes (Meadows)](#system-archetypes-meadows) — cross-cutting, read regardless of which lens(es) you're focused on; it's short and often reframes findings you already have rather than adding new ones to look for.
 
 ## Lens 1: Leverage Points
 
