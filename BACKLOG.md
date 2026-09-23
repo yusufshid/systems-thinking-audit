@@ -13,7 +13,7 @@ Tracked in priority order. Check items off as they're built.
 Step 1 of SKILL.md now lists all 10 layers of an agentic system as *acceptable input*, but the checklist depth in `references/framework.md` still only goes deep on a couple of them (Leverage Points and Feedback Loops cover most layers generically; Scheduling/triggers got a dedicated cron subsection). Build out the rest one at a time, the same way cron was done — a dedicated subsection under whichever lens fits, with the same shape: what to look for, what a red flag looks like.
 
 - [x] **Scheduling / triggers (cron, `/loop`)** — done, under Feedback Loops: frequency/delay, impact/gain, overlap risk, retry/backoff, notification fatigue.
-- [ ] **Tools / affordances** — how tool schemas/descriptions themselves shape agent behavior (the "only tool is delete" problem), beyond the one paradigm example already in framework.md.
+- [x] **Tools / affordances** — done, under Paradigm/Mental Model: affordance asymmetry (missing low-stakes fallback), description-vs-effect mismatch, irreversibility signaling, granularity mismatch, overlapping/redundant tools, unsafe defaults.
 - [ ] **Memory / state** — dedicated checklist for what accumulates in conversation history / persistent memory / shared state, and how that interacts with the stock-vs-flow note in Step 5.
 - [ ] **Permissions / rules** — a concrete checklist for evaluating an actual settings/permission config (not just "is there a gate"), e.g. allowlist scope, default-deny vs default-allow, escalation paths.
 - [ ] **Model / runtime config** — when temperature/model-choice is a real secondary contributor worth flagging vs. noise not worth mentioning.
