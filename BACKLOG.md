@@ -8,6 +8,15 @@ Tracked in priority order. Check items off as they're built.
 - [x] **"Behavior over time" in the report template.** Done: Step 5 point 4 — for a Critical/High loop finding, state the trajectory (worsening / self-correcting / plateauing) only when it's non-obvious, since that changes urgency even when today's snapshot looks similar. Optional guidance, not a mandatory report section — consistent with §3 (don't force a finding) in DESIGN_PRINCIPLES.md.
 - [x] **Package as a `.skill` file** via `scripts.package_skill` for distribution outside this machine. Done — also had to trim the frontmatter `description` from 1172 to 934 characters (max is 1024), which packaging's validation step caught. Packaged file at `dist/systems-thinking-audit.skill`; evals are intentionally excluded from the distributable package.
 
+## Real-world stress test
+
+Audited a real, mature production system (a live Solana LP trading bot with its own independently-built Meadows-style feedback-loop audit practice) as a targeted case, purely to find gaps in our own checklist by comparison. Found and closed 4:
+
+- [x] **Dormant loop check** — a balancing loop can be fully designed/implemented yet never actually fire (e.g. a notification channel with an empty recipient ID). Added to Lens 2 (Feedback Loops) point 6: verify activation, not just presence.
+- [x] **Self-reinforcing scoring/weighting mechanisms** — a mechanism that boosts a signal's influence based on recent success is a reinforcing loop built on purpose, and needs an explicit floor/ceiling/decay check against amplifying a lucky streak. Added to Lens 2 point 7.
+- [x] **Evidentiary discipline for deferred findings** — "not enough data yet" and "the data says it's fine" are different claims; a deferred finding needs its revisit condition actually checked, not just aged in place. Added to Data/ground-truth checklist point 7.
+- [x] **Trading domain**: portfolio-level circuit breakers (distinct from per-trade limits) and the "report-only, not auto-act" pattern for external leading indicators (to avoid an automated detector becoming a new reinforcing loop). Added to `domains.md`.
+
 ## Validation log
 
 - **Iteration 3** (after all 10 component-layer checklists + Orchestrator/Leader section + domains.md were added): re-ran the same 3 evals. All 3 reports stayed focused — each explicitly noted which of the 10 checklists didn't apply rather than padding them in, and 2 of 3 runs used Step 6's independent-subagent verification successfully (all claims confirmed). Confirms the much larger `references/framework.md` didn't cause bloat or dilute report quality.
