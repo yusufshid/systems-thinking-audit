@@ -15,7 +15,7 @@ Step 1 of SKILL.md now lists all 10 layers of an agentic system as *acceptable i
 - [x] **Scheduling / triggers (cron, `/loop`)** — done, under Feedback Loops: frequency/delay, impact/gain, overlap risk, retry/backoff, notification fatigue.
 - [x] **Tools / affordances** — done, under Paradigm/Mental Model: affordance asymmetry (missing low-stakes fallback), description-vs-effect mismatch, irreversibility signaling, granularity mismatch, overlapping/redundant tools, unsafe defaults.
 - [x] **Memory / state** — done, under Leverage Points (Information Structure level): stock-vs-flow, write discipline, concurrent access, staleness, visibility asymmetry, unbounded growth/recency bias, memory as unverified self-check.
-- [ ] **Permissions / rules** — a concrete checklist for evaluating an actual settings/permission config (not just "is there a gate"), e.g. allowlist scope, default-deny vs default-allow, escalation paths.
+- [x] **Permissions / rules** — done, under Leverage Points (Rules level): default posture (allow vs deny), granularity, static vs contextual, escalation path, who can change the rules, enforcement location, stated-vs-enforced drift.
 - [ ] **Model / runtime config** — when temperature/model-choice is a real secondary contributor worth flagging vs. noise not worth mentioning.
 - [ ] **Data / ground-truth sources** — how to assess the strength of an agent's available ground truth (API reliability, staleness, whether it's checkable at all).
 - [ ] **Output / distribution** — a blast-radius framework for rating how expensive a given output channel is to get wrong (message sent vs. file written vs. production deploy).
