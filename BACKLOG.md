@@ -12,6 +12,8 @@ Tracked in priority order. Check items off as they're built.
 
 ## Real-world stress test (continued)
 
+- [x] **Recurring review reason signals a classifier fix, not more triage** — from a real human-review skill for flagged items: if the same underlying reason keeps putting items in front of a human reviewer, that's a signal the upstream classifier/rule needs fixing, not evidence the review process is working — continuing to manually triage each instance is Shifting the Burden wearing a human-review costume. Added to Human Interface's volume/batching point.
+
 - [x] **Automation-readiness as an explicit gate, and dormant-loop verification technique** — from a real skill that tracks cron status against live crontab: (Scheduling/triggers 7, new) not everything manual is a gap — check for an explicit, concrete criterion for when something should be automated (vs. "not automated yet" being an unexamined default), since scheduling a check prematurely just produces noise; (Lens 2 point 6, strengthened) verify dormant-loop activation against the live system's actual config (real crontab, real flag value), not a document that claims the schedule/config exists.
 
 - [x] **Flagged-not-blocked as a third outcome state, and dual-trigger (cron + on-demand)** — from a real rug-avoidance skill that only acts on independently-corroborated evidence: (Permissions/rules 4, extended) when a rule doesn't act because a condition wasn't met, the near-miss should be a recorded distinct outcome, not silently discarded — raw material for later review of whether the caution was warranted; (Scheduling/triggers 6, new) a cron-only check forces delay even when a human has already noticed something urgent — check whether manual on-demand triggering exists alongside the schedule.
