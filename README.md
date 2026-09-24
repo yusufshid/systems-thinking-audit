@@ -72,7 +72,7 @@ It applies across domains, not just "software agents" — customer service, sale
 6. **Verify before finalizing** — re-check Critical/High findings against the actual source material, ideally with an independent second pass, instead of trusting a single read.
 7. **Offer to contribute back** — if the audit surfaces a genuinely new pattern not already in this project's checklist, the skill offers (briefly, skippably) to help file it as an issue/PR here, so real-world audits keep improving the framework itself.
 
-The report always follows the same structure: Scope, Summary, Findings (per lens), Recommendations (prioritized, with second-order effects noted), and the System Map.
+The report always follows the same structure: Scope, Coverage (what was actually checked and how it held up — checked-clean, checked-with-issue, or not checked at all, distinct from the Findings below), Summary, Findings (per lens), Recommendations (prioritized, with second-order effects noted), and the System Map.
 
 ## What the report looks like
 

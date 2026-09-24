@@ -11,7 +11,7 @@ An ordinary code review asks "is this line correct?" This audit asks a different
 
 Run this skill either way:
 - **Full audit** (default): the request is general ("audit this agent," "why does this keep drifting," no specific aspect named) — work through all four lenses in Step 2.
-- **Targeted audit**: the request names a specific concern ("cek cron-nya aja," "just look at the feedback loops," "is the goal definition okay here," "audit skill ini soal permission-nya doang"). Don't force the other three lenses into the report just to keep the template complete — a targeted audit that thoroughly covers one lens is more useful than a shallow pass over four. Still use Step 4's report structure, but write "Out of scope for this audit — see [what was requested] only" under the sections that weren't asked for, so the reader knows the omission was deliberate, not an oversight.
+- **Targeted audit**: the request names a specific concern ("cek cron-nya aja," "just look at the feedback loops," "is the goal definition okay here," "audit skill ini soal permission-nya doang"). Don't force the other three lenses into the report just to keep the template complete — a targeted audit that thoroughly covers one lens is more useful than a shallow pass over four. Still use Step 4's report structure; mark the lenses that weren't asked for as out of scope in the **Coverage** section (Step 4) rather than writing findings for them.
 
 Either way, the same steps (1-6) apply — scope only changes how many of the four lenses you fill in, not the process for the ones you do.
 
@@ -76,6 +76,14 @@ ALWAYS use this exact structure:
 ## Scope
 [What was actually reviewed: system prompt only / architecture description / codebase, and what's missing if anything]
 
+## Coverage
+[A checklist accounting, not a repeat of Findings: for each of the four lenses (and, for a full audit with codebase/repo access, the component-layer subsections in `references/framework.md` that actually apply to this system), mark one of:
+- ✅ **Checked, no issue** — actually inspected, holds up
+- ⚠️ **Checked, issue found** — actually inspected, see Findings
+- ❓ **Not checked** — name the specific material that would be needed (a lens can't be marked ✅/⚠️ just because nothing seemed wrong on a skim; if you didn't actually read the relevant part of the material, it's ❓, not ✅)
+- — **Not applicable** — the system genuinely has no such component (e.g., no scheduling/triggers in a request-response-only agent)
+This is what lets a reader tell "audited and clean" apart from "never actually looked" at a glance, instead of inferring it from the absence of a Finding — especially important for a full-repo audit where it's easy to silently skip a subsection and have that omission disappear rather than show up anywhere.]
+
 ## Summary
 [2-4 sentences: the single biggest structural risk, and the overall pattern if there is one]
 
@@ -120,7 +128,7 @@ This step is what separates a checklist audit from a systems-thinking one: the f
 
 ## Step 6: Check your own findings before calling it done
 
-An audit that hunts for missing balancing loops in other systems but has none on itself is the same failure mode wearing a different hat — you're both the one producing the findings and, by default, the only one checking them. Before finalizing, go back through each Critical or High finding and re-verify it against the actual source material (the exact prompt line, the exact function, the exact tool schema) rather than your first read of it. This is quick — it's not a second full audit — but it's the difference between a finding that says "the reviewers share a prompt" because you glanced at it once, and one you're confident about because you checked it twice. If you can't re-verify a finding this way (e.g., it depends on runtime behavior you can't observe from static material), say so in the finding itself rather than presenting it with the same confidence as one you did verify.
+An audit that hunts for missing balancing loops in other systems but has none on itself is the same failure mode wearing a different hat — you're both the one producing the findings and, by default, the only one checking them. Before finalizing, go back through each Critical or High finding and re-verify it against the actual source material (the exact prompt line, the exact function, the exact tool schema) rather than your first read of it. This is quick — it's not a second full audit — but it's the difference between a finding that says "the reviewers share a prompt" because you glanced at it once, and one you're confident about because you checked it twice. If you can't re-verify a finding this way (e.g., it depends on runtime behavior you can't observe from static material), say so in the finding itself rather than presenting it with the same confidence as one you did verify. Do the same spot-check on the Coverage table: a ✅ you can't actually point to the material for is really a ❓, and the table is exactly as easy to inflate by habit as any other part of the report.
 
 **If you have a way to spawn an independent subagent (a Task/Agent tool), use it here instead of self-verification for a full audit's Critical/High findings** — an agent re-checking its own work is exactly the weak signal source this skill warns about elsewhere (Lens 2's signal-source ranking), so a second agent verifying the first's findings against the source material is a stronger check than the same agent re-reading itself, for the same reason a code reviewer shouldn't be the code's own author. Concretely: pass the verifier agent the finding and the relevant source excerpt (not the full report, and not your reasoning) and ask it to confirm or refute the claim against that material alone — this keeps it a genuine second opinion rather than the same context re-approving itself. Don't fan the *analysis* itself (Step 2) out across multiple agents per lens — parallel lens-agents with no reconciliation step recreate the exact contradiction-with-no-synthesis problem this skill exists to catch (see the multi-reviewer eval case). A verification-only second pass avoids that because it isn't producing new findings to reconcile, only checking existing ones. Skip this for a small or targeted audit (one short prompt, one narrow question) — it's not worth the overhead there; reserve it for full audits or when the user asks for extra rigor.
 
