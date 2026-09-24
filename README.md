@@ -58,7 +58,7 @@ Reach for this skill when:
 - You're designing a new agent (single or multi-agent) and want a structural sanity check before shipping it — especially one with autonomous, hard-to-reverse actions (refunds, admin access, trades, published content)
 - You want to know if a specific concern applies: "is there a missing balancing loop here," "what's the leverage point mismatch," "is this goal metric gameable," "is this a Shifting-the-Burden pattern"
 
-It works from whatever you have — a system prompt, `SKILL.md`/`CLAUDE.md`, a narrated description of the architecture, or the actual codebase. You don't need all of them; see the skill's own Step 1 for what each is good for.
+It works from whatever you have — a system prompt, `SKILL.md`/`CLAUDE.md`, a narrated description of the architecture, the actual codebase, or an execution trace/log of real runs. You don't need all of them; see the skill's own Step 1 for what each is good for. Static material (prompt/code/config) tells you what a loop or a retry is *capable* of doing — a trace tells you what it actually did, which matters because feedback-loop and emergent-behavior findings are claims about interaction over time; the skill flags findings as trace-grounded vs. plausible-from-static-material rather than presenting both with the same confidence.
 
 It applies across domains, not just "software agents" — customer service, sales, trading, financial advisory, business/ops management, marketing, admin/scheduling agents, content generation, coding agents, and orchestrator/leader agents coordinating a team of subagents. See [`references/domains.md`](skill/systems-thinking-audit/references/domains.md) for a quick per-domain translation of the checklist categories.
 
