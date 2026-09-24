@@ -70,7 +70,8 @@ It applies across domains, not just "software agents" — customer service, sale
 4. **Rate each finding's risk** — Critical/High/Medium/Low, by structural severity, not by how easy it is to fix.
 5. **Connect findings into one causal story** (the "System Map") instead of four disconnected piles — this is usually the most useful part of the report, because it tells you where to intervene once rather than four places to patch separately.
 6. **Verify before finalizing** — re-check Critical/High findings against the actual source material, ideally with an independent second pass, instead of trusting a single read.
-7. **Offer to contribute back** — if the audit surfaces a genuinely new pattern not already in this project's checklist, the skill offers (briefly, skippably) to help file it as an issue/PR here, so real-world audits keep improving the framework itself.
+7. **Offer to implement fixes** — for findings with a concrete, scoped shape (not ones needing a human judgment call), the skill offers to patch the audited codebase directly, following its own conventions and verification, and never deploying/merging without a separate go-ahead.
+8. **Offer to contribute back** — if the audit surfaces a genuinely new pattern not already in this project's checklist, the skill offers (briefly, skippably) to help file it as an issue/PR here, so real-world audits keep improving the framework itself.
 
 The report always follows the same structure: Scope, Coverage (what was actually checked and how it held up — checked-clean, checked-with-issue, or not checked at all, distinct from the Findings below), Summary, Findings (per lens), Recommendations (prioritized, with second-order effects noted), and the System Map.
 
