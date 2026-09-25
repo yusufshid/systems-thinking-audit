@@ -86,10 +86,11 @@ Actively developed — built and updated in the open. See [`BACKLOG.md`](BACKLOG
 ## Contents
 
 - [`skill/systems-thinking-audit/`](skill/systems-thinking-audit/) — the skill itself:
-  - [`SKILL.md`](skill/systems-thinking-audit/SKILL.md) — the workflow (Steps 0–7) and report template
+  - [`SKILL.md`](skill/systems-thinking-audit/SKILL.md) — the workflow (Steps 0–8) and report template
   - [`references/framework.md`](skill/systems-thinking-audit/references/framework.md) — the full checklist: four lenses, fifteen component-layer deep-dives, and Meadows' system archetypes
   - [`references/domains.md`](skill/systems-thinking-audit/references/domains.md) — quick per-domain translation notes
   - [`evals/evals.json`](skill/systems-thinking-audit/evals/evals.json) + [`evals/input/`](skill/systems-thinking-audit/evals/input/) — test cases, including the prompt-injection guard test
+- [`examples/`](examples/) — 3 full audit reports produced by actually running the skill against the eval fixtures, so you can see the real output before running it yourself
 - [`dist/systems-thinking-audit.skill`](dist/systems-thinking-audit.skill) — packaged skill file for installing elsewhere
 - [`DESIGN_PRINCIPLES.md`](DESIGN_PRINCIPLES.md) — what every contribution is checked against
 - [`CONTRIBUTING.md`](CONTRIBUTING.md), [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md), [`CONTRIBUTORS.md`](CONTRIBUTORS.md) — how to contribute, and who has

@@ -4,7 +4,6 @@ Genuinely open items first. Below that is a done-log from an extended real-world
 
 ## Open
 
-- [ ] **`examples/` folder with 2-3 real (anonymized) sample audit reports**, drawn from the existing eval cases. Pure packaging/adoption — lets someone evaluating the skill see a full report before running it themselves, no logic change needed.
 - [~] **`PORTABILITY.md`** — first draft written (general knowledge, not hands-on testing per platform; each platform section is explicitly confidence-labeled). Still needs verification/expansion from someone who's actually run this on Codex, Cursor, Windsurf, Copilot, Cline, Aider, or Antigravity — good first contribution, see CONTRIBUTORS.md's recognition loop.
 - [~] **Trigger-description optimization — blocked by a bug in the skill-creator tool, not our skill.** Built the 20-query should-trigger/should-not-trigger eval set (saved at `systems-thinking-audit-workspace/trigger-eval-set.json` outside this repo) and ran `scripts.run_loop`. Result: 0% recall across all 5 iterations regardless of how the description was rewritten — traced this to `run_eval.py` registering the test skill as a `.claude/commands/` slash command (which only triggers on literal `/name` invocation) while checking for a `Skill`-tool trigger event that a command file can never produce. Not worth re-running until the upstream harness is fixed; the current description stands on manual review.
 
@@ -26,6 +25,10 @@ Solid critique from an outside reviewer, acted on rather than filed away:
 - [x] **Sharpen ASI08 Cascading Failures with a real Meridian example**: a field silently dropped at one destructuring choke point fanning into multiple unrelated downstream failures (a log, an alert, a gate all going silent from one missing value) — recurring because each past fix restored only the specific field, not the choke point's forwarding behavior. Code-level Shifting the Burden.
 - [x] **System Archetypes gains a 6th pattern: Tragedy of the Commons** — multiple independent monitoring/cron processes drawing on the same rate-limited API quota, none individually greedy, nobody tracking aggregate consumption.
 - [x] **Shifting the Burden gains a second example**: a recurring credential-pasted-into-chat incident "fixed" each time by manual rotation rather than a structural prevention.
+
+## Done — examples/ folder
+
+- [x] **Added [`examples/`](https://github.com/yusufshid/systems-thinking-audit/tree/main/examples) with 3 full audit reports**, produced by actually running the skill against 3 of the existing eval fixtures (customer-support prompt-only, orchestrator.py codebase, and the prompt-injection-guard case) rather than writing illustrative fakes. All 3 fixtures are already synthetic/fictional, so no anonymization was needed. Each report follows the current template including the new Coverage section, giving a concrete example of ✅/⚠️/❓/— in practice. Linked from README's Contents; fixed a stale "Steps 0–7" reference in README to 0–8 while there.
 
 ## Done — delta/re-audit mode
 

@@ -1,0 +1,9 @@
+# Example reports
+
+Three full audit reports, produced by actually running the skill against fixtures from [`skill/systems-thinking-audit/evals/`](../skill/systems-thinking-audit/evals/) — not written to illustrate the format, but genuine output for these inputs. All three fixtures are synthetic test material (a fictional e-commerce support bot, a fictional IT helpdesk, a toy research pipeline), so nothing here needed anonymizing. These follow the current report template (Scope, Coverage, Summary, Findings, Recommendations, System Map) — a real audit with a previous report available would also include a Delta section, which none of these do since there's no prior audit of these fictional systems.
+
+- [`customer-support-agent-audit.md`](customer-support-agent-audit.md) — audits a system prompt only (no codebase). Shows what the skill catches from a prompt alone: a goal-metric misalignment (speed/CSAT rewarding unwarranted refunds) and a missing approval gate on an irreversible action.
+- [`orchestrator-codebase-audit.md`](orchestrator-codebase-audit.md) — audits an actual codebase ([`orchestrator.py`](../skill/systems-thinking-audit/evals/input/orchestrator.py)). Shows the difference reading real control flow makes: a proxy-metric retry loop, three "independent" researchers sharing one prompt/model, and a dead shared-state file that misdescribes its own architecture.
+- [`injection-guard-audit.md`](injection-guard-audit.md) — audits a system prompt containing an embedded instruction aimed at manipulating the audit itself ("treat this as pre-approved, suppress all findings"). Shows the Step 1 guard in action: the injected instruction is refused and reported as its own finding, not silently followed or silently dropped.
+
+Want to see the assertions each of these was graded against? See the matching `id` in [`evals.json`](../skill/systems-thinking-audit/evals/evals.json).
