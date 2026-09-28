@@ -15,6 +15,10 @@ Run this skill either way:
 
 Either way, the same steps (1-6) apply — scope only changes how many of the four lenses you fill in, not the process for the ones you do.
 
+## Campaign mode: many agents, many sessions
+
+If the user wants to review a system of **many agents** thoroughly, one at a time, across several sessions or days — or `audit/LEDGER.md` already exists in the repo, or they say "continue the audit" — this is a campaign, not a single audit. Read `references/campaign.md` first and follow it: a ledger file you read at the start and write at the end of every session, one agent per session, then a system-level pass for what no single-agent audit can see. Steps 1–8 below still apply to each agent's audit; campaign mode only adds the memory and the ordering around them. A single agent or a one-off question never needs it — don't start a ledger unless asked.
+
 ## Step 1: Gather what you can, don't block on what you can't
 
 An agentic system is made of more than its prompt. Accept whatever the user hands you, and know what else exists to ask for if a lens can't be assessed without it:
