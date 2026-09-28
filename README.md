@@ -73,7 +73,7 @@ It applies across domains, not just "software agents" — customer service, sale
 7. **Offer to implement fixes** — for findings with a concrete, scoped shape (not ones needing a human judgment call), the skill offers to patch the audited codebase directly, following its own conventions and verification, and never deploying/merging without a separate go-ahead.
 8. **Offer to contribute back** — if the audit surfaces a genuinely new pattern not already in this project's checklist, the skill offers (briefly, skippably) to help file it as an issue/PR here, so real-world audits keep improving the framework itself.
 
-**Reviewing many agents over many sessions?** Campaign mode (see [`references/campaign.md`](skill/systems-thinking-audit/references/campaign.md)) keeps one ledger file in the audited repo that each session reads first and updates last: a roster of agents, a matrix of what's been checked, stable finding IDs with status, and a decision log. It audits one agent per session, then runs a system-level pass for cross-agent problems no single-agent audit can see. See [`examples/campaign-ledger.md`](examples/campaign-ledger.md).
+**Reviewing many agents over many sessions?** Campaign mode (see [`references/campaign.md`](skill/systems-thinking-audit/references/campaign.md)) keeps one ledger file in the audited repo that each session reads first and updates last: a roster of agents, a matrix of what's been checked, stable finding IDs with status, and a decision log. It audits one agent per session, then runs a system-level pass for cross-agent problems no single-agent audit can see. See [`examples/campaign-ledger.md`](examples/campaign-ledger.md) and the roll-up it produced, [`examples/campaign-system-report.md`](examples/campaign-system-report.md).
 
 The report always follows the same structure: Scope, Coverage (what was actually checked and how it held up — checked-clean, checked-with-issue, or not checked at all, distinct from the Findings below), Summary, Delta (Resolved / Recurring / New, only when a previous audit report was given), Findings (per lens), Recommendations (prioritized, with second-order effects noted), and the System Map.
 
@@ -93,7 +93,7 @@ Actively developed — built and updated in the open. See [`BACKLOG.md`](BACKLOG
   - [`references/campaign.md`](skill/systems-thinking-audit/references/campaign.md) — campaign mode: ledger format and the four phases for multi-session, multi-agent audits
   - [`references/domains.md`](skill/systems-thinking-audit/references/domains.md) — quick per-domain translation notes
   - [`evals/evals.json`](skill/systems-thinking-audit/evals/evals.json) + [`evals/input/`](skill/systems-thinking-audit/evals/input/) — test cases, including the prompt-injection guard test
-- [`examples/`](examples/) — a sample campaign ledger and 3 full audit reports produced by actually running the skill against the eval fixtures, so you can see the real output before running it yourself
+- [`examples/`](examples/) — a sample campaign ledger with its system roll-up, and 3 full audit reports produced by actually running the skill against the eval fixtures, so you can see the real output before running it yourself
 - [`dist/systems-thinking-audit.skill`](dist/systems-thinking-audit.skill) — packaged skill file for installing elsewhere
 - [`DESIGN_PRINCIPLES.md`](DESIGN_PRINCIPLES.md) — what every contribution is checked against
 - [`CONTRIBUTING.md`](CONTRIBUTING.md), [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md), [`CONTRIBUTORS.md`](CONTRIBUTORS.md) — how to contribute, and who has

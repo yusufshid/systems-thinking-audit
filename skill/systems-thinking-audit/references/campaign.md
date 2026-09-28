@@ -11,11 +11,11 @@ The mechanism is deliberately small: **one ledger file** (`audit/LEDGER.md` in t
 **Start:**
 1. Read `audit/LEDGER.md`. If it doesn't exist, this is Phase 1 — create it.
 2. Remember its `last updated` line (skip this on the very first session, when there is nothing to compare). Do not write the ledger later if that line changed while you worked (someone else, or another session, edited it) — show the user the conflict instead.
-3. Give **one paragraph**, not a recap of the whole ledger: which phase, agents done / in progress / not started, and the open Critical/High findings. Then ask which agent to work on. If the user just says "continue" without naming one, take the ledger's suggested next agent and say so in your first line; never pick a different one silently. Apply any status decisions the user states in the same message *before* starting the audit (see the status rules below).
+3. Give **one paragraph**, not a recap of the whole ledger: which phase, agents done / in progress / not started, and the open Critical/High findings. Then ask which agent to work on. If the user just says "continue" without naming one, take the ledger's suggested next agent and say so in your first line (invite a redirect instead of waiting); never pick a different one silently. If the user's message already tells you what to do ("go straight to the system pass"), give the one paragraph and proceed. Apply any status decisions the user states in the same message *before* starting the audit (see the status rules below).
 
 **End:**
 1. Update the ledger: matrix cells, new/changed findings, decision log entries, `last updated`.
-2. Show the user what changed in the ledger as a real before/after, not just "updated": copy the ledger to a temp file before editing and show `diff` of the two, or (no shell) list each changed row old → new. The ledger is the only memory; the user has to be able to see and correct it. The `phase:` header is updated by you at this step: Phase 1 closes when the user confirms the roster, Phase 3 starts when the matrix has no resolvable ❓.
+2. Show the user what changed in the ledger as a real before/after, not just "updated": copy the ledger to a temp file before editing and show `diff` of the two, or (no shell) list each changed row old → new. The ledger is the only memory; the user has to be able to see and correct it. The `phase:` header is updated by you at this step: Phase 1 closes when the user confirms the roster, Phase 3 starts when every agent is audited once and each ❓ is resolved or declared blocked.
 3. Say what the next session should start with.
 
 If there is no write access to the audited repo (a third-party system, a pasted-in prompt), print the full updated ledger in chat at the end and ask the user to save it as `audit/LEDGER.md`; they paste it back at the start of the next session.
@@ -39,14 +39,14 @@ Run the normal audit (SKILL.md Steps 1–6) on that one agent, with these change
 
 ## Phase 3: System-level pass
 
-Run when every agent's row has no ❓ that can be resolved, or when the user asks. The input is the **finding register plus the interfaces**, not the raw agents again. Look for what no single-agent audit can see:
+Run when every agent has been audited once and every remaining ❓ is either resolved or **declared blocked by the user** ("those files aren't available"), or when the user asks. Record a blocked cell as `❓ blocked` with the missing material named, so it stays visible as a known blind spot rather than reading as pending work; list all blocked cells in the roll-up report as unverified. The input is the **finding register plus the interfaces**, not the raw agents again. Look for what no single-agent audit can see:
 - Orchestrator/leader section of `framework.md` for whatever coordinates the others, and the hierarchy balance (over-control vs. under-coordination).
 - System Archetypes, run across the register: the same finding recurring in several agents is Shifting the Burden or a shared root cause (one fix, not N patches); several agents drawing on the same quota is Tragedy of the Commons.
 - Shared state and shared control mechanisms across agents (visibility asymmetry, a control whose scope is wider than its name).
 - Chain length across the whole workflow (Lens 2, point 10) — per-agent reliability multiplies across handoffs.
 - Whether accepted risks in different agents combine into a larger one.
 
-The System Map (SKILL.md Step 5) of this pass is the **roll-up report**. Write it to `audit/SYSTEM.md`. Cross-agent findings go in the register with `S` IDs (`S-F1`).
+The System Map (SKILL.md Step 5) of this pass is the **roll-up report**. Write it to `audit/SYSTEM.md`. Cross-agent findings go in the register with `S` IDs (`S-F1`). A finding that rolls up several per-agent findings around one root cause is rated at the worst consequence of the root cause, and says so; it does not add up the severities. Re-verify any interface claim carried forward from earlier sessions against source before relying on it, and withdraw it in the ledger if it was never verified.
 
 ## Phase 4: Change-triggered re-audit
 
@@ -56,7 +56,7 @@ When an agent, tool, or shared component changes, don't re-audit everything and 
 - A change-triggered re-audit is partial, so Step 6's independent verifier is optional; self-verify the findings you touch.
 - If the repo has no history to diff the old and new versions, say so and infer what changed from the earlier report's citations, stating that you did.
 - A prompt-level change cannot lower the severity of a rules-level finding: severity moves only when enforcement itself is verified (the backend code, the config), not when the prompt now says the right thing (Permissions/rules, enforcement location). Note "partly addressed in prompt, unverified" on the finding; it stays `open`.
-- A layer added to the matrix after Phase 1 is a new column, ❓ for every agent it applies to.
+- A layer added to the matrix after Phase 1 is a new column, ❓ for every agent it applies to. If a layer clearly matters for an agent the confirmed roster omitted it from, add it to that agent's row with a note; the user confirmed the agents, not the exact layer lists.
 
 ## The ledger
 
@@ -101,7 +101,7 @@ last updated: [date] · phase: [1|2|3|4]
 ## Definition of done
 
 The campaign is complete only when all of these hold:
-1. Every applicable matrix cell is ✅ (or ⚠️ with the finding fixed/accepted) — no ❓ remains.
+1. Every applicable matrix cell is ✅ (or ⚠️ with the finding fixed/accepted), and every ❓ is either resolved or explicitly `❓ blocked` by the user — a blocked cell means the campaign ends *with stated blind spots*, not that the system was verified there.
 2. No `open` Critical or High finding. An `accepted` Critical/High does not block completion, but it never disappears: the roll-up report (`audit/SYSTEM.md`) lists every accepted Critical/High with the user's reason and revisit condition, and Phase 3 must assess the accepted risks *together* (several accepted risks can combine into one larger one). Accepting everything must not make the campaign look finished.
 3. Phase 3 was run **after the last change** to any agent or interface.
 4. Every `accepted` finding has a user-confirmed reason and revisit condition.
